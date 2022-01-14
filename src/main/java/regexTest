@@ -1,0 +1,366 @@
+@Resource
+private CustomizeFormMapper customizeFormMapper;
+
+@Resource
+private BudgetAllocateFormMapper budgetAllocateFormMapper;
+
+@Resource
+private ProcurementFormMapper procurementFormMapper;
+
+@Resource
+private ContractApplicationFormMapper contractApplicationFormMapper;
+
+@Resource
+private ContractClaimFormMapper contractClaimFormMapper;
+
+@Resource
+private HouseLeaseFormMapper houseLeaseFormMapper;
+
+@Resource
+private HouseLeaseReceiptFormMapper houseLeaseReceiptFormMapper;
+
+@Resource
+private AssetsStorageFormMapper assetsStorageFormMapper;
+
+@Resource
+private AssetsUseFormMapper assetsUseFormMapper;
+
+@Resource
+private AssetsTransferFormMapper assetsTransferFormMapper;
+
+@Resource
+private AssetsInventoryFormMapper assetsInventoryFormMapper;
+
+@Resource
+private AssetsDisposalFormMapper assetsDisposalFormMapper;
+
+@Resource
+private AssetsReturnFormMapper assetsReturnFormMapper;
+
+@Resource
+private AssetsModifyFormMapper assetsModifyFormMapper;
+
+@Resource
+private BudgetModifyFormMapper budgetModifyFormMapper;
+
+@Resource
+private ProjectTenderFormMapper projectTenderFormMapper;
+
+@Resource
+private ProjectContractFormMapper projectContractFormMapper;
+
+@Resource
+private ProjectContractModifyFormMapper projectContractModifyFormMapper;
+
+@Resource
+private ProjectContractAcceptanceFormMapper projectContractAcceptanceFormMapper;
+
+@Resource
+private ProjectContractSettlementFormMapper projectContractSettlementFormMapper;
+
+@Resource
+private ProjectContractClaimFormMapper projectContractClaimFormMapper;
+
+@Resource
+private ProjectAcceptanceFormMapper projectAcceptanceFormMapper;
+
+@Resource
+private ProjectReportFormMapper projectReportFormMapper;
+
+@Resource
+private ConsumablesStorageFormMapper consumablesStorageFormMapper;
+
+@Resource
+private ConsumablesUseFormMapper consumablesUseFormMapper;
+
+@Resource
+private ProcurementTenderLetterFormMapper procurementTenderLetterFormMapper;
+
+@Resource
+private ProcurementResultFormMapper procurementResultFormMapper;
+
+@Resource
+private LoanApplicationFormMapper loanApplicationFormMapper;
+
+@Resource
+private LoanClaimFormMapper loanClaimFormMapper;
+
+@Resource
+private BillStorageFormMapper billStorageFormMapper;
+
+@Resource
+private BillUseFormMapper billUseFormMapper;
+
+@Resource
+private BillApplicationFormMapper billApplicationFormMapper;
+
+@Resource
+private BillInvalidFormMapper billInvalidFormMapper;
+
+@Resource
+private BillVoidFormMapper billVoidFormMapper;
+
+@Resource
+private TemporaryDepositFormMapper temporaryDepositFormMapper;
+
+@Resource
+private TemporaryDepositClaimFormMapper temporaryDepositClaimFormMapper;
+
+@Resource
+private IncomeContractFormMapper incomeContractFormMapper;
+
+@Resource
+private IncomeContModifyFormMapper incomeContModifyFormMapper;
+
+@Resource
+private ReceiptFormMapper receiptFormMapper;
+
+@Resource
+private BudgetAppendFormMapper budgetAppendFormMapper;
+
+@Resource
+private BudgetReceiptFormMapper budgetReceiptFormMapper;
+
+@Resource
+private TemporaryPaymentFormMapper temporaryPaymentFormMapper;
+
+@Resource
+private TemporaryPaymentClaimFormMapper temporaryPaymentClaimFormMapper;
+
+@Resource
+private BonusFactorFormMapper bonusFactorFormMapper;
+
+@Resource
+private SalaryFormMapper salaryFormMapper;
+
+@Resource
+private AssetsRepairFormMapper assetsRepairFormMapper;
+
+@Resource
+private AssetsRepairResultFormMapper assetsRepairResultFormMapper;
+
+@Resource
+private AssetsRepairExpenseFormMapper assetsRepairExpenseFormMapper;
+
+@Resource
+private AssetsRepairClaimFormMapper assetsRepairClaimFormMapper;
+
+@Resource
+private ExpertStorageFormMapper expertStorageFormMapper;
+
+@Resource
+private ExpertExtractFormMapper expertExtractFormMapper;
+
+@Resource
+private InfrastructureFormMapper infrastructureFormMapper;
+
+@Resource
+private AssetsInternalBorrowFormMapper assetsInternalBorrowFormMapper;
+
+@Resource
+private AssetsInternalReturnFormMapper assetsInternalReturnFormMapper;
+
+@Resource
+private AssetsExternalBorrowFormMapper assetsExternalBorrowFormMapper;
+
+@Resource
+private AssetsExternalReturnFormMapper assetsExternalReturnFormMapper;
+
+@Resource
+private ExpertOutFormMapper expertOutFormMapper;
+
+@Resource
+private ExpertModifyFormMapper expertModifyFormMapper;
+
+@Resource
+private FinanceBudgetReportFormMapper financeBudgetReportFormMapper;
+
+@Resource
+private DeptBudgetPlanFormMapper deptBudgetPlanFormMapper;
+
+@Resource
+private EnterpriseReportFormMapper enterpriseReportFormMapper;
+
+@Resource
+private ExpertActivityEvaluateFormMapper expertActivityEvaluateFormMapper;
+
+@Resource
+private ExpertEvaluateFormMapper expertEvaluateFormMapper;
+
+@Resource
+private CompanyBulletinFormMapper companyBulletinFormMapper;
+
+@Resource
+private ReceiptTurnInFormMapper receiptTurnInFormMapper;
+
+@Resource
+private LaborClaimFormMapper laborClaimFormMapper;
+
+@Resource
+private BudgetDeclareFormMapper budgetDeclareFormMapper;
+
+@Resource
+private CustomBudgetFormMapper customBudgetFormMapper;
+
+@Resource
+private NpCollectMessageFormMapper npCollectMessageFormMapper;
+
+@Resource
+private NpProResearchFormMapper npProResearchFormMapper;
+
+@Resource
+private TaskReleaseFormMapper taskReleaseFormMapper;
+
+@Resource
+private AssessmentMakeFormMapper assessmentMakeFormMapper;
+
+@Resource
+private CarApplicationFormMapper carApplicationFormMapper;
+
+@Resource
+private SealApplyFormMapper sealApplyFormMapper;
+
+@Resource
+private FinanceSituationFormMapper financeSituationFormMapper;
+
+@Resource
+private RoomUseFormMapper roomUseFormMapper;
+
+@Resource
+private AttendanceFormMapper attendanceFormMapper;
+
+@Resource
+private AttendanceSubsidyFormMapper attendanceSubsidyFormMapper;
+
+@Resource
+private InternalMattersFormMapper internalMattersFormMapper;
+
+@Resource
+private PaymentReturnFormMapper paymentReturnFormMapper;
+
+@Resource
+private AttendanceRestFormMapper attendanceRestFormMapper;
+
+@Resource
+private ConsumablesCancellingFormMapper consumablesCancellingFormMapper;
+
+@Resource
+private ProjectRegisterFormMapper projectRegisterFormMapper;
+
+@Resource
+private ResearchProjectRegisterFormMapper researchProjectRegisterFormMapper;
+
+@Resource
+private InternalFondsFormMapper internalFondsFormMapper;
+
+@Resource
+private TenderRegisterFormMapper tenderRegisterFormMapper;
+
+@Resource
+private ProjectInvestigationFormMapper projectInvestigationFormMapper;
+
+@Resource
+private ProductionTaskFormMapper productionTaskFormMapper;
+
+@Resource
+private FinalAccountContractFormMapper finalAccountContractFormMapper;
+
+@Resource
+private ImplementationPlanFormMapper implementationPlanFormMapper;
+
+@Resource
+private ReceiptGuaranteeFormMapper receiptGuaranteeFormMapper;
+
+@Resource
+private GuaranteeRemoveFormMapper guaranteeRemoveFormMapper;
+
+@Resource
+private ProcurementPlanFormMapper procurementPlanFormMapper;
+
+@Resource
+private CollaborationEvaluationFormMapper collaborationEvaluationFormMapper;
+
+@Resource
+private ContractFinalAccountFormMapper contractFinalAccountFormMapper;
+
+@Resource
+private TenderDocumentationFormMapper tenderDocumentationFormMapper;
+
+@Resource
+private ProjectApplicationInitFormMapper projectApplicationInitFormMapper;
+
+@Resource
+private ProjectPreTenderFormMapper projectPreTenderFormMapper;
+
+@Resource
+private ProjectTenderApplicationFormMapper projectTenderApplicationFormMapper;
+
+@Resource
+private ProjectTransferFormMapper projectTransferFormMapper;
+
+@Resource
+private VehicleSubsidyFormMapper vehicleSubsidyFormMapper;
+
+@Resource
+private SettleApplicationFormMapper settleApplicationFormMapper;
+
+@Resource
+private ProjectPlanExecuteFormMapper projectPlanExecuteFormMapper;
+
+@Resource
+private ProjectEstimatedModifyFormMapper projectEstimatedModifyFormMapper;
+
+@Resource
+private LeaseContTerminateFormMapper leaseContTerminateFormMapper;
+
+@Resource
+private SalaryClaimFormMapper salaryClaimFormMapper;
+
+@Resource
+private BankAccountAppFormMapper bankAccountAppFormMapper;
+
+@Resource
+private AccountModificationFormMapper accountModificationFormMapper;
+
+@Resource
+private ContractStatementFormMapper contractStatementFormMapper;
+
+@Resource
+private ContractChangesFormMapper contractChangesFormMapper;
+
+@Resource
+private ContractDismissFormMapper contractDismissFormMapper;
+
+@Resource
+private PreApprovalFormMapper preApprovalFormMapper;
+
+@Resource
+private LandConstructionIncomeFormMapper landConstructionIncomeFormMapper;
+
+@Resource
+private IncomeContractDismissFormMapper incomeContractDismissFormMapper;
+
+@Resource
+private IncomeReturnFormMapper incomeReturnFormMapper;
+
+        }
+
+        if (GENERAL_FORM_RANGE.contains(formType)) {
+@Resource
+private GeneralFormMapper generalFormMapper;
+
+        } else if (DIRECT_CLAIM_FORM_RANGE.contains(formType)) {
+@Resource
+private DirectClaimFormMapper directClaimFormMapper;
+
+        } else if (COST_ACCOUNT_APPLICATION_FORM_RANGE.contains(formType)) {
+@Resource
+private ExpenseApplicationFormMapper expenseApplicationFormMapper;
+
+        } else if (COST_ACCOUNT_CLAIM_FORM_RANGE.contains(formType)) {
+@Resource
+private ExpenseClaimFormMapper expenseClaimFormMapper;
+
+        } else if (PROJECT_PROGRESS_FORM_RANGE.contains(formType)) {
+@Resource
+private ProjectApplicationFormMapper projectApplicationFormMapper;
