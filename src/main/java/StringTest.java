@@ -1,16 +1,26 @@
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author jianweitong
+ */
 public class StringTest {
     public final static String DOT = ".";
     public final static String SIGNED_SUFFIX_STR = "（已签署）";
 
-    public static void main(String[] args)throws Exception {
+    public static void main(String[] args) throws Exception {
 //        slash("\\Users\\jianweitong\\Documents\\dir\\ric\\attachment_root\\78\\787C26DA-1DAF-42A8-BDDB-078B2C446EB8\\桐庐电子签章(1).pdf");
 
 //        dot("13.41.pdf");
-        contain(Collections.singletonList("null"),null);
+
+//        contain(Collections.singletonList("null"),null);
+
+        readBinFile("/Users/jianweitong/Downloads/Untitled");
     }
 
     private static void dot(String oldFileName) {
@@ -43,11 +53,22 @@ public class StringTest {
 //        System.out.println("使用\\切割后的最后一个字符:" + str.split(OPPOSITE_SLASH2)[str.split(OPPOSITE_SLASH2).length-1]);
     }
 
-    private  static <T> void contain(List<T> list, T object) throws Exception {
-        if(list==null||list.size()==0){
+    private static <T> void contain(List<T> list, T object) throws Exception {
+        if (list == null || list.size() == 0) {
             throw new Exception("数组为空");
         }
         System.out.println(list.contains(object));
     }
+
+    private static void readBinFile(String filePath) throws IOException {
+        DataInputStream dis = null;
+
+        dis = new DataInputStream(new FileInputStream(filePath));
+
+        byte[] b = new byte[1024];
+
+        dis.read(b);
+    }
+
 
 }
