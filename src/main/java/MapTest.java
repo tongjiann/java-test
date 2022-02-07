@@ -1,6 +1,5 @@
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import sun.java2d.pipe.SpanIterator;
 
 import java.util.Date;
 import java.util.HashMap;
