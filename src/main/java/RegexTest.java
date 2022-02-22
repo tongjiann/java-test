@@ -12,5 +12,7 @@ public class RegexTest {
         matcher.replaceAll("1");
         System.out.println("pattern:" + pattern);
         System.out.println(matcher.matches());
+        String[] split = "th?id=1".split("th\\?id=");
+        System.out.println(split);
     }
 }
