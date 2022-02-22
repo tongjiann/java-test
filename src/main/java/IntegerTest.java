@@ -1,14 +1,14 @@
-public class IntegerTest {
-    public static void main(String[] args) {
-        divisibleTest();
-        modTest();
-    }
+import org.junit.Test;
 
-    private static void divisibleTest() {
+public class IntegerTest {
+
+    @Test
+    public void divisibleTest() {
         System.out.println(8 / 2);
     }
 
-    private static void modTest() {
+    @Test
+    public void modTest() {
         System.out.println(9 % 2);
     }
 }
