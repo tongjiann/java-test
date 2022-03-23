@@ -18,4 +18,15 @@ public class ListTest {
         }
         System.out.println(list.subList(1,10));
     }
+
+    @Test
+    public void testRemove(){
+        List<String > list = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            list.add(String.valueOf(i));
+        }
+        boolean remove = list.remove(null);
+        System.out.println(remove);
+        System.out.println(list);
+    }
 }

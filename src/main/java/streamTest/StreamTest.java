@@ -1,5 +1,7 @@
 package streamTest;
 
+import org.junit.Test;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -498,6 +500,20 @@ public class StreamTest {
         System.out.println("流合并：" + newList);
         System.out.println("limit：" + collect);
         System.out.println("skip：" + collect2);
+    }
+
+    @Test
+    public void testEmptyList() {
+        List<Person> personList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Person person = new Person("i");
+            personList.add(person);
+        }
+        List<String> collect = personList
+                .stream()
+                .map(Person::getSex).filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        System.out.println(collect);
     }
 
 }
