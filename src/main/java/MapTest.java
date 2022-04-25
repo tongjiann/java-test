@@ -25,4 +25,14 @@ public class MapTest {
         Map<String ,String > map = new HashMap<>();
         System.out.println(map.get("1"));
     }
+
+    @Test
+    public void testValues(){
+        Map<String ,String > map  = new HashMap<>();
+        map.put("1","v1");
+        map.put("2","v2");
+        map.put("3","v3");
+        map.put("4","v1");
+        System.out.println(map.values());
+    }
 }
