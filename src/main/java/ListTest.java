@@ -11,22 +11,35 @@ public class ListTest {
     }
 
     @Test
-    public void SubListTest(){
-        List<String > list = new ArrayList<>();
+    public void SubListTest() {
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             list.add("1");
         }
-        System.out.println(list.subList(1,10));
+        System.out.println(list.subList(1, 10));
     }
 
     @Test
-    public void testRemove(){
-        List<String > list = new ArrayList<>();
+    public void testRemove() {
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             list.add(String.valueOf(i));
         }
         boolean remove = list.remove(null);
         System.out.println(remove);
+        System.out.println(list);
+    }
+
+    @Test
+    public void testRemove2() {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 42; i++) {
+            list.add(String.valueOf(i));
+        }
+        while (list.size() > 10) {
+            System.out.println(list.subList(0, 10));
+            list.removeIf(e -> list.indexOf(e) < 10);
+        }
         System.out.println(list);
     }
 }
