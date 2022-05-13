@@ -1,13 +1,27 @@
+import org.junit.Test;
+
 import java.util.Locale;
 import java.util.UUID;
 
 public class UUIDTest {
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
+
+    @Test
+    public void testExpception() {
+        for (int i = 0; i < 22; i++) {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("throw new LogicalException(\"未知的错误");
+            stringBuilder.append("VALUES ('");
             stringBuilder.append(UUID.randomUUID().toString().toUpperCase(Locale.ROOT));
-            stringBuilder.append("\");");
+            stringBuilder.append("',");
+            System.out.println(stringBuilder.toString());
+        }
+    }
+
+    @Test
+    public void testUUIDCreator() {
+        for (int i = 0; i < 30; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(UUID.randomUUID().toString().toUpperCase(Locale.ROOT));
+            stringBuilder.append("\n");
             System.out.println(stringBuilder.toString());
         }
     }
