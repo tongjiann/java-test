@@ -42,4 +42,13 @@ public class ListTest {
         }
         System.out.println(list);
     }
+
+    @Test
+    public void testContainNull() {
+        ArrayList arrayList = new ArrayList();
+        System.out.println(arrayList.contains(null));
+        arrayList.add("1");
+        System.out.println(arrayList.contains(null));
+
+    }
 }
