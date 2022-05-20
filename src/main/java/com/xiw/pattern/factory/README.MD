@@ -12,3 +12,10 @@
 
 继续肉夹馍，由于使用了简单工厂模式，肉夹馍生意那个好啊，所以下载决定去西安开个分店，去北京开个分店。既然有分店了，那总店就是抽象的了：
 ## 抽象工厂模式
+
+![](https://imgurlhangzhouxiwang.oss-cn-beijing.aliyuncs.com/20220520144824.png)
+GUIFactory->RoujiaMoStore
+WinFactory->XianRouJiaMoStore
+RouJiaMO(Meat,YuanLiao)->Product(Button,Checkbox)
+FreshMeat->WinButton
+XianTeSeYuanLiao->WinCheckBox
