@@ -1,7 +1,10 @@
+import org.junit.Test;
+
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -68,6 +71,20 @@ public class StringTest {
         byte[] b = new byte[1024];
 
         dis.read(b);
+    }
+
+    @Test
+    public void nullTest(){
+        String a = null;
+        BigDecimal bigDecimal = new BigDecimal(String.valueOf(a));
+        System.out.println(bigDecimal);
+    }
+
+    @Test
+    public void splitTest(){
+        String str = "com.yaagoole.ric.service.ru.BudgetAllocateFormServiceImpl$$EnhancerBySpringCGLIB$$a1c72625";
+        System.out.println(Arrays.toString(str.split("\\$")));
+        System.out.println(111_222_333);
     }
 
 

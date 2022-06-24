@@ -51,4 +51,19 @@ public class ListTest {
         System.out.println(arrayList.contains(null));
 
     }
+
+    @Test
+    public void testLastIndexOf(){
+        List<Integer> list = new ArrayList<>();
+        System.out.println(list.lastIndexOf(1));
+
+    }
+
+    @Test
+    public void testAddNull(){
+        List<Integer> list = new ArrayList<>();
+        list.add(null);
+        list.add(1);
+        System.out.println(list);
+    }
 }

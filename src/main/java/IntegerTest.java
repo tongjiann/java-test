@@ -11,4 +11,10 @@ public class IntegerTest {
     public void modTest() {
         System.out.println(9 % 2);
     }
+
+    @Test
+    public void nullTest(){
+        Integer i = null;
+        System.out.println(i==1);
+    }
 }
