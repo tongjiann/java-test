@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author jianweitong
@@ -85,6 +86,13 @@ public class StringTest {
         String str = "com.yaagoole.ric.service.ru.BudgetAllocateFormServiceImpl$$EnhancerBySpringCGLIB$$a1c72625";
         System.out.println(Arrays.toString(str.split("\\$")));
         System.out.println(111_222_333);
+    }
+
+    @Test
+    public void replaceTest(){
+        String str = "";
+        String replace = str.replace("\n", "、");
+        System.out.println(replace);
     }
 
 

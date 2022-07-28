@@ -4,16 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>maventest</artifactId>
+    <groupId>com.xiw</groupId>
+    <artifactId>javaTest</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <repositories>
-        <repository>
-            <id>alimaven</id>
-            <name>aliyun maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -28,7 +21,7 @@
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
-            <version>1.17.1</version>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -88,4 +81,33 @@
             <version>2.13.0</version>
         </dependency>
     </dependencies>
+
+
+    <repositories>
+        <!-- 配置nexus远程仓库 -->
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://127.0.0.1:8081/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>User Project Release</name>
+            <url>http://127.0.0.1:8081/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>User Project SNAPSHOTS</name>
+            <url>http://127.0.0.1:8081/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
