@@ -15,6 +15,6 @@ public class IntegerTest {
     @Test
     public void nullTest(){
         Integer i = null;
-        System.out.println(i==1);
+        System.out.println(1==i);
     }
 }
