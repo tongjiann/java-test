@@ -1,4 +1,3 @@
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -23,7 +22,7 @@ public class JsonTest {
         getField(json);
     }
 
-    public static void main(String[] args) {
+    public static void main3(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("请输入json字符串：");
@@ -47,14 +46,54 @@ public class JsonTest {
     @Test
     public void deTest() {
         User user = new User();
-        user.setId(1L);
+        user.setId("1");
         String s = JSON.toJSONString(user);
         Map<String, Object> jsonObject = JSON.parseObject(s);
         System.out.println(jsonObject);
     }
 
-    @Data
-    private class User implements Serializable {
-        private Long id;
+//    @Data
+//    private class User implements Serializable {
+//        private Long id;
+//    }
+
+    @Test
+    public void JsonObjectTest() {
+
+    }
+
+    @Test
+    public void getTest() {
+        var string = """
+                {
+                    "name": "JsonT",
+                    "description": "一个简洁的在线 JSON 解析器",
+                    "features": [
+                        "JSON解析/美化/压缩/验证/编辑",
+                        {
+                            "name": "一键分享",
+                            "available": true
+                        }
+                    ]
+                }
+                """;
+        JSONObject jsonObject = JSONUtil.parseObj(string);
+        Object byPath = JSONUtil.getByPath(jsonObject, "features[1].name");
+        System.out.println(byPath);
+    }
+
+    @Test
+    public void upperTest() {
+        String jsonStr1 = "{'ID':'123456','username':'ggf'}";
+        // 调用parseObject()
+        User user = JSON.parseObject(jsonStr1, User.class);
+    }
+
+    public static void main(String[] args) {
+         String jsonStr1 = "{'ID':'123456','username':'ggf'}";
+        // 调用parseObject()
+        User user = JSON.parseObject(jsonStr1, User.class);
+        System.out.println(user);
     }
 }
+

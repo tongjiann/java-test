@@ -516,5 +516,17 @@ public class StreamTest {
         System.out.println(collect);
     }
 
+    @Test
+    public void testDistinct() {
+        List<Person> personList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Person person = new Person("name", 1, "sex", "area");
+            personList.add(person);
+        }
+        personList.add(new Person("name2",1,"sex","area"));
+        ArrayList<Person> collect = personList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(e -> e.getName() + e.getSex() + e.getArea() + e.getAge()))), ArrayList::new));
+        System.out.println(collect);
+    }
+
 }
 
