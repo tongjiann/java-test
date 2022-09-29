@@ -2,6 +2,7 @@ package entity;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,9 @@ import java.util.Map;
  * @since 2022-06-27 16:57
  */
 @Data
-public class User {
+public class User implements Serializable{
+    @Serial
+    private static final long serialVersionUID = 1L;
     private String id;
     private List<String> s;
 

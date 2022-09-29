@@ -119,7 +119,6 @@ public class StreamTest {
     }
 
 
-
     public static void main(String[] args) {
         List<String> list = Arrays.asList("1", "2");
         List<Map<String, String>> collect = list.parallelStream().map(StreamTest::string2Map).collect(Collectors.toList());
@@ -196,6 +195,15 @@ public class StreamTest {
             return s2;
         });
         s3.forEach(System.out::println); // a b c 1 2 3
+    }
+
+    @Test
+    public void nullTest() {
+        List<String> list = null;
+        list.forEach(e->{});
+        List<String> collect = list
+                .stream()
+                .collect(Collectors.toList());
     }
 
 }

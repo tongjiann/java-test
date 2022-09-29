@@ -1,12 +1,14 @@
+import cn.hutool.core.util.ObjectUtil;
+import helper.LevenshteinHelper;
 import org.junit.Test;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author jianweitong
@@ -89,51 +91,27 @@ public class StringTest {
     @Test
     public void replaceTest() {
         String str = """
-                CREATE TABLE `xyzgjjdxt.dsc_sx_biz_026_by_zc_detail1_v_zj`(
-                	`id_id` STRING COMMENT '唯一主键ID',
-                	`bhgx0034` STRING COMMENT '家庭关系',
-                	`azcp0003` STRING COMMENT '姓名',
-                	`azcp0001` STRING COMMENT '身份证',
-                	`azcp0004` STRING COMMENT '性别',
-                	`azcp0005` STRING COMMENT '出生日期',
-                	`bhgx0039` STRING COMMENT '年龄',
-                	`bhgx0040` STRING COMMENT '是否保障对象',
-                	`azcp0013` STRING COMMENT '户口性质',
-                	`bhgx0042` STRING COMMENT '人员类别',
-                	`azcp0009` STRING COMMENT '健康状况',
-                	`azcp0010` STRING COMMENT '婚姻状况',
-                	`azcp0007` STRING COMMENT '民族',
-                	`azcp0011` STRING COMMENT '职业状况',
-                	`azcp0012` STRING COMMENT '政治面貌',
-                	`bhgx0048` STRING COMMENT '特定是否保障对象',
-                	`bhgx0049` STRING COMMENT '残疾类别',
-                	`bhgx0050` STRING COMMENT '残疾等级',
-                	`bhgx0051` STRING COMMENT '残疾证号',
-                	`bhgx0052` STRING COMMENT '开户银行',
-                	`bhgx0053` STRING COMMENT '银行账号',
-                	`azcp0008` STRING COMMENT '文化程度',
-                	`bhgx0055` STRING COMMENT '劳动能力',
-                	`azbe0003` STRING COMMENT '工作学习单位',
-                	`bhgx0093` STRING COMMENT '主键',
-                	`bhgx0094` STRING COMMENT '外键',
-                	`bhgx0095` STRING COMMENT '人员信息类别',
-                	`bhgx0096` STRING COMMENT '单据类型',
-                	`bhgx0000` STRING COMMENT '流水号唯一键值',
-                	`dsc_city` STRING COMMENT '所属地市',
-                	`dsc_adm_region` STRING COMMENT '所需区/县',
-                	`dsc_sydep_code` STRING COMMENT '数源单位代码',
-                	`dsc_sydep_name` STRING COMMENT '数源单位',
-                	`dsc_sydep_sys` STRING COMMENT '数据所属系统名称',
-                	`dsc_sydep_tblname` STRING COMMENT '数源单位表名',
-                	`dsc_biz_record_id` STRING COMMENT '唯一自增序列号',
-                	`dsc_biz_operation` STRING COMMENT 'I插入U更新D删除',
-                	`dsc_biz_timestamp` STRING COMMENT '源表数据同步时间',
-                	`dsc_datasr_tblname` STRING COMMENT '数据来源表名(清洗库或基础库表名)',
-                	`dsc_hash_unique` STRING COMMENT '业务主键MD5值（清洗增加）',
-                	`dsc_clean_timestamp` STRING COMMENT '清洗时间（清洗增加）',
-                	`dsc_dw_rksj` STRING COMMENT '地市仓数据入库时间',
-                	`dsc_mark` STRING COMMENT '自然人主表常住人口/流动人口标记'
-                ) COMMENT '低保边缘在册家庭子表信息-绍兴';
+                CREATE TABLE `xyzgjjdxt.biz_06043051_zj_sw_yssjxx_fr`(
+                	`tyshxydm` STRING COMMENT '统一社会信用代码',
+                	`yhh` STRING COMMENT '用户号',
+                	`yhdz` STRING COMMENT '用户地址',
+                	`yhxz` STRING COMMENT '用户性质',
+                	`frjgmc` STRING COMMENT '法人机构名称',
+                	`cbrq` STRING COMMENT '抄表日期',
+                	`zdlsh` STRING COMMENT '账单流水号',
+                	`sqcj` STRING COMMENT '上期抄见',
+                	`sccbrq` STRING COMMENT '上次抄表日期',
+                	`sjly` STRING COMMENT '数据来源',
+                	`bqcj` STRING COMMENT '本期抄见',
+                	`bqsl` STRING COMMENT '本期水量',
+                	`znje` STRING COMMENT '滞纳金额',
+                	`bsh` STRING COMMENT '表计号',
+                	`xzqydm` STRING COMMENT '行政区域代码',
+                	`gsbm` STRING COMMENT '公司编码',
+                	`op` STRING COMMENT '取值:insert,update,delete',
+                	`biz_time` STRING COMMENT '记录产生时间，部门提供',
+                	`load_time` STRING COMMENT '推送时间，自动生成'
+                ) COMMENT '诸暨市用水数据表（法人）';
                 """;
         String replace = str.replace("STRING", "varchar(255)");
         System.out.println(replace);
@@ -176,5 +154,96 @@ public class StringTest {
         });
     }
 
+    @Test
+    public void elTest() {
+        String source = """
+                部门【${部门}】用户【${用户}】创建 岗位:$<[${岗位}-岗位]>成功
+                """;
+        Map<String, Object> map = new HashMap<>();
+        List<Map<String, Object>> po = new ArrayList<>();
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("岗位", "pos1");
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("岗位", "pos2");
+        Map<String, Object> map3 = new HashMap<>();
+        map3.put("岗位", "pos3");
+        po.add(map1);
+        po.add(map2);
+        po.add(map3);
+        map.put("部门", "开发部");
+        map.put("用户", "张三");
 
+        map.put("岗位", po);
+        map.put("岗位1", "po");
+        String target = getContent(source, map);
+        System.out.println(target);
+    }
+
+
+    public String getContent(String str, Map<String, Object> map) {
+        str = dealWithList(str, map);
+        return dealWithSimple(str, map);
+    }
+
+    /**
+     * 处理EL表达式变量的替换
+     */
+    private static String dealWithSimple(String str, Map<String, Object> map) {
+        Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
+        Matcher matcher = pattern.matcher(str);
+        while (matcher.find()) {
+            String key = ObjectUtil.defaultIfNull(matcher.group(1), "");
+            var value = ObjectUtil.defaultIfNull((String) map.get(key), "");
+            str = str.replace("${" + key + "}", value);
+        }
+        return str;
+    }
+
+    /**
+     * 处理集合的EL表达式变量的替换
+     */
+    private String dealWithList(String str, Map<String, Object> map) {
+        return dealWithList("岗位", str, map);
+    }
+
+    private String dealWithList(String listName, String str, Map<String, Object> map) {
+        Pattern pattern = Pattern.compile("\\$<(.*?)>");
+        Matcher matcher = pattern.matcher(str);
+        while (matcher.find()) {
+            String group = matcher.group(1);
+            List<Map<String, Object>> value;
+            StringBuilder stringBuilder = new StringBuilder();
+            Object o = ObjectUtil.defaultIfNull(map.get(listName), new ArrayList<>());
+            if (o instanceof List) {
+                value = (List<Map<String, Object>>) o;
+                value.forEach(e -> stringBuilder.append(dealWithSimple(group, e)));
+            }
+            str = str.replace("$<" + group + ">", stringBuilder.toString());
+        }
+        return str;
+    }
+
+    @Test
+    public void similarTest() {
+
+        var 中标工程名称 = "2021年滨江幼儿园改造工程$$$$$东和乡中校园整体改造工程$$$$$南悦幼儿园改扩建工程$$$$$唐山小学外墙、道路硬化及幼儿园室内等装修改造工程$$$$$学勉中学1#、2#食堂改造工程$$$$$应店街镇小改造工程$$$$$技师学院特色餐厅及排污系统改造工程$$$$$暨阳分校体能测试室装修工程$$$$$暨阳初中宿舍楼改造工程$$$$$枫桥新镇中功能室等装修工程（施工）$$$$$枫桥镇学校改造工程$$$$$柱山小学老教学楼及室外活动场地改造工程$$$$$次坞镇秀松中学体艺馆改造工程$$$$$江藻初中改造工程（二期）$$$$$浣江初中耕深楼改造工程$$$$$浣纱初中运动场改建工程$$$$$湄池中学教学楼强弱电桥架预铺设及广播线路改造工程$$$$$湄池中学消防和饮水管网改造工程$$$$$湖头小学（复办）改造工程-室外改造项目$$$$$湖头小学（复办）改造工程-教学楼改造项目$$$$$牌头中学三幢教工宿舍维修改造工程$$$$$职教中心教学楼行政楼厕所改造及校园地下水管维修工程$$$$$职教中心新能源实训室维修工程$$$$$草塔中学体育馆外立面及校东大门维修工程$$$$$草塔中学学生宿舍3号楼改造、体育馆屋顶及排水管道维修工程$$$$$草塔中学学生食堂装修工程$$$$$草塔中学教学楼学生卫生间改造装修、食堂二楼地面改造、格致楼及报告厅大门出口原铝塑板雨棚工程$$$$$诸暨中学暨阳分校南校门新建及配套工程$$$$$诸暨中学暨阳分校科技馆外立面改造工程$$$$$诸暨中学校园安全防护提升工程$$$$$诸暨中学行政电教图书楼及食堂男生楼外墙面维修改造工程$$$$$诸暨工业职校户外体验中心建设工程$$$$$诸暨市教育体育局2022年度50万元以下小额基建工程—房屋建筑、市政、园林、绿化工程$$$$$诸暨市教育体育局2022年度房屋建筑、市政工程监理招标$$$$$诸暨市新世纪小学食堂改造工程$$$$$诸暨市暨阳街道大侣小学食堂改造及塑胶修补项目$$$$$诸暨市浣纱小学二校区塑胶运动场改造工程$$$$$诸暨市璜山初中改造提升工程$$$$$诸暨市菲达幼儿园维修工程$$$$$诸暨市陶朱街道跨湖幼儿园会议室拓宽、户外活动场等装修改造工程$$$$$诸暨技师学院部分消防管道更换维修、管道阀门井增加工程$$$$$陶朱中心幼儿园、白门幼儿园室内及室外场地等改造工程$$$$$陶朱小学室内外场地、污水管道等改造工程$$$$$陶朱明德小学攀岩壁项目$$$$$陶朱街道明德小学走廊、功能室等装修工程";
+        var 存在考勤工程名称 = "浙江农林大学暨阳学院 学生公寓新建工程项目$$$$$浙江农林大学暨阳学院 学生公寓新建工程项目$$$$$浙江省诸暨市职业教育中心 诸暨市职教中心高职教学楼新建工程$$$$$浙江诸暨荣怀教育投资发展有限公司荣怀春江幼儿园$$$$$绍兴枫桥学院$$$$$诸暨市人民政府暨阳街道办事处 暨阳小学风雨操场建设工程$$$$$诸暨市人民政府陶朱街道办事处  诸暨市跨湖幼儿园新建工程（主楼、保安室）$$$$$诸暨市人民政府陶朱街道办事处 诸暨市陶朱街道崇真初中新建工程$$$$$诸暨市实验小学 诸暨市西子小学新建工程$$$$$诸暨市店口镇中心学校-诸暨市店口镇杨梅桥小学扩建工程$$$$$诸暨市店口镇第二中心小学重建工程$$$$$诸暨市教育体育局  诸暨市城东初中新建工程$$$$$诸暨市枫桥镇人民政府 枫桥镇初级中学易地新建工程-1#~3#教学楼、1#~2#宿舍、报告厅、体艺及食堂楼、1#~3#门卫、配电房$$$$$诸暨市浬浦中学 诸暨市浬浦中学老女生楼重建工程$$$$$诸暨市湄池中学-诸暨市湄池中学教工宿舍楼新建及校舍改造工程（教工宿舍楼新建部分）$$$$$诸暨市越盛教育发展有限公司 诸暨市幼托一体普惠园-三江幼儿园扩建工程$$$$$诸暨市越盛教育发展有限公司 诸暨市幼托一体普惠园-东江幼儿园项目$$$$$诸暨市越盛教育发展有限公司 诸暨市幼托一体普惠园-望湖幼儿园新建工程$$$$$诸暨市越盛教育发展有限公司 诸暨市幼托一体普惠园-西子幼儿园新建工程$$$$$诸暨市越盛教育发展有限公司 诸暨市幼托一体普惠园-越都幼儿园项目 ";
+        LevenshteinHelper helper = new LevenshteinHelper();
+        var 中标工程列表 = Arrays.asList(中标工程名称.split("\\$\\$\\$\\$\\$"));
+        var 存在考勤工程列表 = Arrays.asList(存在考勤工程名称.split("\\$\\$\\$\\$\\$"));
+        List<Float> floats = new ArrayList<>();
+        for (String s : 中标工程列表) {
+            for (String s1 : 存在考勤工程列表) {
+                float similarityRatio = helper.getSimilarityRatio(s, s1);
+                if (similarityRatio > 0.7F) {
+                    System.out.println(s + "," + s1);
+                } else {
+                    floats.add(similarityRatio);
+                }
+            }
+        }
+        floats.sort(Comparator.reverseOrder());
+        System.out.println(floats);
+    }
 }
+
