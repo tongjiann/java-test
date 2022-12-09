@@ -1,3 +1,4 @@
+import lombok.Data;
 import org.junit.Test;
 
 import java.util.*;
@@ -6,6 +7,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 
 public class StreamTest {
     @Test
@@ -200,14 +204,32 @@ public class StreamTest {
     @Test
     public void nullTest() {
         List<String> list = null;
-        list.forEach(e->{});
+        list.forEach(e -> {
+        });
         List<String> collect = list
                 .stream()
                 .collect(Collectors.toList());
     }
 
+    @Test
+    public void collectAndThenTest() {
+        List<Person> personList = new ArrayList<>();
+        personList.add(new Person(5));
+        personList.add(new Person(1));
+        personList.add(new Person(2));
+        personList.add(new Person(4));
+        personList.add(new Person(3));
+        personList.add(new Person(5));
+        personList = personList
+                .stream()
+                .collect(collectingAndThen(toCollection(() ->
+                        new TreeSet<>((Comparator.comparing(Person::getId)))), ArrayList::new));
+        System.out.println(personList);
+    }
+
 }
 
+@Data
 class Person {
     int id;
     String name;
@@ -219,5 +241,9 @@ class Person {
         this.name = name;
         this.sex = sex;
         this.height = height;
+    }
+
+    public Person(int id) {
+        this.id = id;
     }
 }
