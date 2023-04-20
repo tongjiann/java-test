@@ -1,11 +1,15 @@
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import helper.LevenshteinHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -244,6 +248,12 @@ public class StringTest {
         }
         floats.sort(Comparator.reverseOrder());
         System.out.println(floats);
+    }
+
+    @Test
+    public void codeTest(){
+        String s = HttpUtil.get("http://fundgz.1234567.com.cn/js/012414.js");
+        System.out.println(s);
     }
 }
 

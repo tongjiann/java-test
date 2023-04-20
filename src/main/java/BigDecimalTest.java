@@ -12,4 +12,19 @@ public class BigDecimalTest {
     public void zeroTest() {
         System.out.println(BigDecimal.ZERO.compareTo(BigDecimal.ONE));
     }
+
+    /**
+     * 使用new BigDecimal()和BigDecimal.valueOf(）构造double出来的值
+     * 但是将double转为String类型(不是使用toString())，会改变精度
+     */
+    @Test
+    public void longTest(){
+        Double d = 2.345531;
+        String s = "2.3455345434536623436336437";
+        System.out.println(new BigDecimal(s));
+        BigDecimal bdStr = new BigDecimal((d.toString()));
+        BigDecimal bdLog = BigDecimal.valueOf(d);
+        System.out.println(bdStr);
+        System.out.println(bdLog);
+    }
 }
