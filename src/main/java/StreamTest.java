@@ -1,3 +1,4 @@
+import cn.hutool.core.util.RandomUtil;
 import lombok.Data;
 import org.junit.Test;
 
@@ -225,6 +226,44 @@ public class StreamTest {
                 .collect(collectingAndThen(toCollection(() ->
                         new TreeSet<>((Comparator.comparing(Person::getId)))), ArrayList::new));
         System.out.println(personList);
+    }
+
+    /**
+     * forEachOrdered是为了保证遍历顺序（并行流），但效率没有forEach高
+     */
+    @Test
+    public void forEachTest() {
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            numbers.add(i);
+        }
+        numbers.parallelStream().forEachOrdered(e -> {
+            try {
+                Thread.sleep(RandomUtil.randomInt(1000));
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            System.out.println(e);
+        });
+        System.out.println("==============");
+        numbers.parallelStream().forEach(e -> {
+            try {
+                Thread.sleep(RandomUtil.randomInt(1000));
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            System.out.println(e);
+        });
+    }
+
+    @Test
+    public void reduceTest() {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i < 11; i++) {
+            list.add(i);
+        }
+        Integer reduce = list.stream().reduce(0, Integer::sum);
+        System.out.println(reduce);
     }
 
 }

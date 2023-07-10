@@ -27,4 +27,14 @@ public class BigDecimalTest {
         System.out.println(bdStr);
         System.out.println(bdLog);
     }
+
+    @Test
+    public void test2(){
+        new BigDecimal("4").divide(new BigDecimal("3"));
+    }
+
+    @Test
+    public void test3(){
+        System.out.println(new BigDecimal("0.1").add(new BigDecimal("0.2")));
+    }
 }
