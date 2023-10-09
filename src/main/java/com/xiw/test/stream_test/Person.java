@@ -1,4 +1,4 @@
-package com.xiw.test.streamTest;
+package com.xiw.test.stream_test;
 
 import lombok.Data;
 
