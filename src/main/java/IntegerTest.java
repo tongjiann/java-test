@@ -33,4 +33,9 @@ public class IntegerTest {
         System.out.println(NUMBER_256.equals(256));
 
     }
+
+    @Test
+    public void parseNullTest(){
+        int i = Integer.valueOf(null);
+    }
 }
