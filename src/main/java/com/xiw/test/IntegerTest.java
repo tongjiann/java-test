@@ -40,4 +40,16 @@ public class IntegerTest {
     public void parseNullTest(){
         int i = Integer.valueOf(null);
     }
+
+    @Test
+    public void intTest(){
+        int i = 0;
+        test(i);
+    }
+
+    private static void test(Object o){
+        if(o instanceof Integer){
+            System.out.println(true);
+        }
+    }
 }
