@@ -106,33 +106,52 @@ public class Solution {
     }
 
     public static String reverseParentheses(String s) {
-        Simple simple = getRes(s);
-        return simple.getRes();
-
+        return getRes(s, 0).getRes();
     }
 
-    private static Simple getRes(String s) {
-        int len = 0;
+    public static String reverseParentheses2(String s) {
+        Deque<String> stack = new LinkedList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
-            if (c >= 'a' && c <= 'z') {
-                stringBuilder.append(c);
-                len += 1;
-            } else if (c == '(') {
-                Simple simple = getRes(s.substring(i + 1));
-                i = i + simple.getLen() - 1;
-                stringBuilder.append(simple.getRes());
+            if (c == '(') {
+                stack.push(stringBuilder.toString());
+                stringBuilder.setLength(0);
             } else if (c == ')') {
-                return new Simple(len, stringBuilder.reverse().toString());
+                stringBuilder.reverse();
+                stringBuilder.insert(0, stack.pop());
+            } else {
+                stringBuilder.append(c);
             }
         }
-        return new Simple(0, "");
+        return stringBuilder.toString();
+    }
+
+
+    private static Simple getRes(String s, int offset) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int length = s.length();
+        int idx = offset;
+        while (idx < length) {
+            char c = s.charAt(idx);
+            if (c >= 'a' && c <= 'z') {
+                stringBuilder.append(c);
+                idx++;
+            } else if (c == '(') {
+                Simple simple = getRes(s.substring(idx), 1);
+                stringBuilder.append(simple.getRes());
+                idx += simple.getLen();
+            } else if (c == ')') {
+                return new Simple(idx + offset, stringBuilder.reverse().toString());
+            }
+        }
+        return new Simple(0, stringBuilder.toString());
     }
 
     @Test
     public void test1190() {
-        System.out.println(reverseParentheses("(ed(et(oc))el)"));
+        System.out.println(reverseParentheses2("(ed(et(oc))el)"));
     }
 
     @Test
