@@ -229,5 +229,63 @@ public class Solution {
 
     }
 
+    public static int chalkReplacerBig(int[] chalk, int k, int length) {
+        int idx = 0;
+        while (k >= 0) {
+            idx = idx % length;
+
+            int i = chalk[idx];
+            if (k < i) {
+                return idx;
+            }
+            k = k - i;
+            idx++;
+        }
+        return 0;
+    }
+
+    public static int chalkReplacerSmall(int[] chalk, int k, int length) {
+        int sum = Arrays.stream(chalk).sum();
+        k = k % sum;
+        for (int i = 0; i < length; i++) {
+            int i1 = chalk[i];
+            if (k < i1) {
+                return i;
+            }
+            k -= i1;
+        }
+        return 0;
+    }
+
+    public static int chalkReplacer(int[] chalk, int k) {
+        long total = 0;
+        for (int i : chalk) {
+            total += i;
+        }
+        long res = k % total;
+        int length = chalk.length;
+        for (int i = 0; i < length; i++) {
+            int i1 = chalk[i];
+            if (res < i1) {
+                return i;
+            }
+            res -= i1;
+        }
+        return 0;
+    }
+
+    public static int chalkReplacer2(int[] chalk, int k) {
+        int length = chalk.length;
+        if (length <= 1000) {
+            return chalkReplacerSmall(chalk, k, length);
+        }
+        return chalkReplacerBig(chalk, k, length);
+    }
+
+    @Test
+    public void test1894() {
+        System.out.println(chalkReplacer(new int[]{3, 4, 1, 2}, 25));
+    }
+
 }
 // leetcode submit region end(Prohibit modification and deletion)
