@@ -37,4 +37,11 @@ public class FileTest {
         byte[] bytes1 = fileInputStream.readAllBytes();
         System.out.println(".");
     }
+
+    @Test
+    public void testFileUtil() {
+        String filePath = "./test.json";
+        File file = FileUtil.newFile(filePath);
+        FileUtil.touch(file);
+    }
 }
