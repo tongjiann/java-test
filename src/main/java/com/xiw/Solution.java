@@ -6,11 +6,339 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Solution {
+
+    @Test
+    public void test394() {
+        System.out.println(decodeString("2[abc]3[cd]ef"));
+    }
+
+    public String decodeString(String s) {
+        return getFrontLetters(s) + doDecode(cut(s)) + getBackLetters(s);
+    }
+
+    private String cut(String s) {
+        int endIdx = s.lastIndexOf(']');
+        if (endIdx == -1) {
+            // 没找到
+            return "";
+        }
+        int beginIdx = 0;
+        char c = s.charAt(beginIdx);
+        while (c >= 'a' && c <= 'z') {
+            beginIdx++;
+            c = s.charAt(beginIdx);
+        }
+        return s.substring(beginIdx, endIdx + 1);
+    }
+
+    private String getBackLetters(String s) {
+        int i = s.lastIndexOf(']');
+        if (i == -1) {
+            // 没找到
+            return "";
+        }
+        return s.substring(i + 1);
+    }
+
+    private String getFrontLetters(String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= 'a' && c <= 'z') {
+                stringBuilder.append(c);
+            } else {
+                return stringBuilder.toString();
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    private String doDecode(String s) {
+        int num = getNum(s);
+        String substring = s.substring(s.indexOf('[') + 1, s.lastIndexOf(']'));
+        String cut = cut(s);
+        String part1 = getFrontLetters(substring);
+        String part2;
+        if (cut.isEmpty()) {
+            part2 = "";
+        } else {
+            part2 = doDecode(cut);
+        }
+        String part3 = getBackLetters(substring);
+        return (part1 + part2 + part3).repeat(num);
+    }
+
+    private int getNum(String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int idx = 0;
+        char c = s.charAt(idx);
+        while (c >= '0' && c <= '9') {
+            stringBuilder.append(c);
+            idx++;
+            c = s.charAt(idx);
+        }
+        return Integer.parseInt(stringBuilder.toString());
+    }
+
+    @Test
+    public void test383() {
+        System.out.println(canConstruct("aa", "aab"));
+    }
+
+    public boolean canConstruct(String ransomNote, String magazine) {
+        if (magazine.length() < ransomNote.length()) {
+            return false;
+        }
+        Map<Integer, Integer> rMap = new HashMap<>();
+        Map<Integer, Integer> mMap = new HashMap<>();
+        for (int i = 0; i < ransomNote.length(); i++) {
+            int n = ransomNote.charAt(i) - 'a';
+            rMap.putIfAbsent(n, 0);
+            rMap.put(n, rMap.get(n) + 1);
+        }
+        for (int i = 0; i < magazine.length(); i++) {
+            int n = magazine.charAt(i) - 'a';
+            mMap.putIfAbsent(n, 0);
+            mMap.put(n, mMap.get(n) + 1);
+        }
+        for (Map.Entry<Integer, Integer> entry : rMap.entrySet()) {
+            Integer key = entry.getKey();
+            if (!mMap.containsKey(key)) {
+                return false;
+            }
+            Integer mValue = entry.getValue();
+            Integer rValue = mMap.get(key);
+            if (rValue < mValue) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Test
+    public void test204() {
+        System.out.println(countPrimes(5000000));
+    }
+
+    public int countPrimes(int n) {
+        int[] isPrime = new int[n];
+        Arrays.fill(isPrime, 1);
+        int ans = 0;
+        for (int i = 2; i < n; ++i) {
+            if (isPrime[i] == 1) {
+                ans += 1;
+                if ((long) i * i < n) {
+                    for (int j = i * i; j < n; j += i) {
+                        isPrime[j] = 0;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * TLE
+     */
+    public int countPrimes2(int n) {
+        if (n < 3) {
+            return 0;
+        }
+        if (n == 3) {
+            return 1;
+        }
+        List<Integer> primeList = new ArrayList<>();
+        primeList.add(2);
+        boolean isPrime;
+        for (int i = 3; i < n; i++) {
+            isPrime = true;
+            for (Integer prime : primeList) {
+                if (prime * prime > i) {
+                    break;
+                }
+                if (i % prime == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if (isPrime) {
+                primeList.add(i);
+            }
+        }
+        return primeList.size();
+    }
+
+    @Test
+    public void test101() {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.left.left = new TreeNode(3);
+        root.left.right = new TreeNode(4);
+        root.right = new TreeNode(2);
+        root.right.left = new TreeNode(4);
+        root.right.right = new TreeNode(3);
+        System.out.println(isSymmetric(root));
+    }
+
+    @Test
+    public void test102() {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.left.left = new TreeNode(3);
+        root.left.right = new TreeNode(4);
+        root.right = new TreeNode(2);
+        root.right.left = new TreeNode(4);
+        root.right.right = new TreeNode(3);
+        System.out.println(levelOrder(root));
+    }
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        ans.add(List.of(root.val));
+        addZigZagNumber(ans, root, 1);
+        return ans;
+    }
+
+    private void addZigZagNumber(List<List<Integer>> ans, TreeNode root, int level) {
+
+    }
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        ans.add(List.of(root.val));
+        addNumber(ans, root, 1);
+        return ans;
+    }
+
+    private void addNumber(List<List<Integer>> ans, TreeNode root, int level) {
+        if (root.left != null) {
+            addToTargetLevel(ans, root.left.val, level);
+            addNumber(ans, root.left, level + 1);
+        }
+        if (root.right != null) {
+            addToTargetLevel(ans, root.right.val, level);
+            addNumber(ans, root.right, level + 1);
+        }
+    }
+
+    private void addToTargetLevel(List<List<Integer>> ans, int val, int level) {
+        while (ans.size() <= level) {
+            ans.add(new ArrayList<>());
+        }
+        ans.get(level).add(val);
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        return compare(root.left, root.right);
+    }
+
+    private boolean compare(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        }
+        if ((left == null || right == null) || (left.val != right.val)) {
+            return false;
+        }
+        return compare(left.left, right.right) && compare(left.right, right.left);
+    }
+
+    @Test
+    public void test82() {
+        ListNode listNode = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(4, new ListNode(4))))));
+        System.out.println(deleteDuplicates(listNode));
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode();
+        ListNode last = dummy;
+        ListNode current = head;
+        while (current != null) {
+            last.next = getNext(current, current.next, 0);
+            if (last.next == null) {
+                return dummy.next;
+            }
+            current = last.next.next;
+            last = last.next;
+        }
+        return dummy.next;
+    }
+
+    private ListNode getNext(ListNode first, ListNode next, int i) {
+        if (next == null) {
+            if (i == 0) {
+                return first;
+            }
+            return null;
+        }
+        if (first.val == next.val) {
+            return getNext(next, next.next, i + 1);
+        }
+        if (i == 0) {
+            return first;
+        }
+        return getNext(next, next.next, 0);
+    }
+
+    public static class TreeNode {
+
+        int val;
+
+        TreeNode left;
+
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+    }
+
+    public class ListNode {
+
+        int val;
+
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "ListNode{" +
+                    "val=" + val +
+                    ", next=" + next +
+                    '}';
+        }
+
+    }
 
     @Test
     public void test36() {
