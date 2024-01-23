@@ -11,6 +11,184 @@ import java.util.stream.Collectors;
 public class Solution {
 
     @Test
+    public void test2243(){
+        System.out.println(digitSum("1",2));
+    }
+
+    public String digitSum(String s, int k) {
+        int length = s.length();
+        if (length <= k) {
+            return s;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        int idx = 0;
+        while (idx * k < length) {
+            int res = 0;
+            for (int i = 0; i < k; i++) {
+                int pos = idx * k + i;
+                if (pos >= length) {
+                    break;
+                }
+                res += s.charAt(pos) - '0';
+            }
+            stringBuilder.append(res);
+            idx++;
+        }
+        return digitSum(stringBuilder.toString(), k);
+    }
+
+    @Test
+    public void test1796() {
+        System.out.println(secondHighest("sjhtz8344"));
+    }
+
+    public int secondHighest(String s) {
+        int first = -1;
+        int second = -1;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!Character.isDigit(c)) {
+                continue;
+            }
+            int tmp = c - '0';
+            if (tmp > first) {
+                second = first;
+                first = tmp;
+            } else if (tmp < first && tmp > second) {
+                second = tmp;
+            }
+        }
+        return second;
+    }
+
+    @Test
+    public void test2240() {
+        System.out.println(waysToBuyPensPencils(9000000, 2, 3));
+    }
+
+    public long waysToBuyPensPencils(int total, int cost1, int cost2) {
+        long res = 0;
+        int max;
+        int maxPrice;
+        int otherPrice;
+        int remain;
+        if (cost1 >= cost2) {
+            max = total / cost1;
+            maxPrice = cost1;
+            otherPrice = cost2;
+        } else {
+            max = total / cost2;
+            maxPrice = cost2;
+            otherPrice = cost1;
+        }
+        for (int i = max; i >= 0; i--) {
+            remain = total - i * maxPrice;
+            res += remain / otherPrice + 1;
+        }
+        return res;
+    }
+
+    @Test
+    public void test2239() {
+        System.out.println(findClosestNumber(new int[]{2, -1, -1}));
+    }
+
+    public int findClosestNumber(int[] nums) {
+        int minDistance = Integer.MAX_VALUE;
+        int minNum = Integer.MIN_VALUE;
+        int distance;
+        for (int num : nums) {
+            if (num < 0) {
+                distance = -num;
+            } else {
+                distance = num;
+            }
+            if (distance < minDistance) {
+                minNum = num;
+                minDistance = distance;
+            } else if (distance == minDistance) {
+                if (num > minNum) {
+                    minNum = num;
+                }
+            }
+        }
+        return minNum;
+    }
+
+    @Test
+    public void test2241() {
+        ATM atm = new ATM();
+        atm.deposit(new int[]{0, 0, 1, 2, 1});
+        System.out.println(Arrays.toString(atm.withdraw(600)));
+        atm.deposit(new int[]{0, 1, 0, 1, 1});
+        System.out.println(Arrays.toString(atm.withdraw(600)));
+        System.out.println(Arrays.toString(atm.withdraw(550)));
+    }
+
+    class ATM {
+
+        private final int[] ERROR = new int[]{-1};
+
+        private final int[] MONEY_TYPE = new int[]{20, 50, 100, 200, 500};
+
+        private final int[] EXIST = new int[]{0, 0, 0, 0, 0};
+
+        public ATM() {
+
+        }
+
+        public void deposit(int[] banknotesCount) {
+            for (int i = 0; i < 5; i++) {
+                EXIST[i] += banknotesCount[i];
+            }
+        }
+
+        public int[] withdraw(int amount) {
+            if (!canWithdraw(amount)) {
+                return ERROR;
+            }
+            return tryWithdraw(amount);
+        }
+
+        private boolean canWithdraw(int amount) {
+            if (amount % 10 != 0) {
+                return false;
+            }
+            long totalAmount = EXIST[0] * 20L + EXIST[1] * 50L + EXIST[2] * 100L + EXIST[3] * 200L + EXIST[4] * 500L;
+            return totalAmount >= amount;
+
+        }
+
+        private int[] tryWithdraw(int amount) {
+            int[] res = new int[]{0, 0, 0, 0, 0};
+
+            for (int i = 4; i >= 0; i--) {
+                if (amount == 0) {
+                    break;
+                }
+                int cnt = amount / MONEY_TYPE[i];
+                if (cnt > 0) {
+                    // 最多只能取这么多
+                    cnt = Math.min(EXIST[i], cnt);
+                    res[i] += cnt;
+                    EXIST[i] -= cnt;
+                    // 扣掉
+                    amount -= cnt * MONEY_TYPE[i];
+                }
+            }
+            if (amount != 0) {
+                // 尝试失败，还钱
+                for (int i = 4; i >= 0; i--) {
+                    EXIST[i] += res[i];
+                }
+                return ERROR;
+            }
+            return res;
+        }
+
+    }
+
+    @Test
     public void test1347() {
         System.out.println(minSteps("leetcode", "practice"));
     }
