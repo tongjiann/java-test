@@ -11,6 +11,38 @@ import java.util.stream.Collectors;
 public class Solution {
 
     @Test
+    public void test1347() {
+        System.out.println(minSteps("leetcode", "practice"));
+    }
+
+    public int minSteps(String s, String t) {
+        Map<Integer, Integer> sMap = new HashMap<>();
+        Map<Integer, Integer> tMap = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            int sn = s.charAt(i) - 'a';
+            int tn = t.charAt(i) - 'a';
+            sMap.putIfAbsent(sn, 0);
+            sMap.put(sn, sMap.get(sn) + 1);
+            tMap.putIfAbsent(tn, 0);
+            tMap.put(tn, tMap.get(tn) + 1);
+        }
+        int res = 0;
+        for (Map.Entry<Integer, Integer> entry : sMap.entrySet()) {
+            Integer key = entry.getKey();
+            Integer value = entry.getValue();
+            if (tMap.containsKey(key)) {
+                Integer i = tMap.get(key);
+                if (i < value) {
+                    res += value - i;
+                }
+            } else {
+                res += value;
+            }
+        }
+        return res;
+    }
+
+    @Test
     public void test394() {
         System.out.println(decodeString("2[abc]3[cd]ef"));
     }
