@@ -10,6 +10,76 @@ import java.util.stream.Collectors;
 
 public class Solution {
 
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode last = dummy;
+        ListNode current = head;
+        int idx = 1;
+        while (idx < left) {
+            last = current;
+            current = current.next;
+            idx++;
+        }
+        ListNode leftNode = last;
+        ListNode rightNode = current;
+        ListNode next = current.next;
+        while (idx < right) {
+            ListNode tmp = next.next;
+            next.next = current;
+            current = next;
+            next = tmp;
+            idx++;
+        }
+        leftNode.next = current;
+        rightNode.next = next;
+        return dummy.next;
+    }
+
+    public List<List<Integer>> findSolution(CustomFunction customfunction, int z) {
+        List<List<Integer>> res = new ArrayList<>();
+        for (int x = 1; x < 1001; x++) {
+            for (int y = 1; y < 1001; y++) {
+                int f = customfunction.f(x, y);
+                if (f == z) {
+                    res.add(List.of(x, y));
+                } else if (f > z) {
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    @Test
+    public void test804() {
+        System.out.println(uniqueMorseRepresentations(new String[]{"gin", "zen", "gig", "msg"}));
+    }
+
+    public int uniqueMorseRepresentations(String[] words) {
+        Set<String> stringSet = new HashSet<>();
+        String[] strings = new String[]{
+                ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---",
+                "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
+                "..-", "...-", ".--", "-..-", "-.--", "--.."
+        };
+        for (String word : words) {
+            StringBuilder stringBuilder = new StringBuilder();
+            char[] charArray = word.toCharArray();
+            for (char c : charArray) {
+                stringBuilder.append(strings[c - 'a']);
+            }
+            stringSet.add(stringBuilder.toString());
+        }
+        return stringSet.size();
+    }
+
+    interface CustomFunction {
+
+        int f(int x, int y);
+
+    }
+
     @Test
     public void test2243(){
         System.out.println(digitSum("1",2));
