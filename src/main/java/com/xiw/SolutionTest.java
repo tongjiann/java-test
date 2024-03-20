@@ -8,7 +8,106 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Solution {
+public class SolutionTest {
+
+    public static void main(String[] args) {
+        int intLength = 3;
+        long[] longs = kthPalindrome(convertStringToIntArray("[1,2,3,4,5,90]"), intLength);
+        for (long aLong : longs) {
+            System.out.println(aLong);
+        }
+    }
+
+
+    private static boolean isPalindrome(long current) {
+        String s = String.valueOf(current);
+        int sLen = s.length();
+
+        while (sLen > 1) {
+            if (s.charAt(0) != s.charAt(sLen - 1)) {
+                return false;
+            }
+            s = s.substring(1, sLen - 1);
+            sLen = s.length();
+        }
+        return true;
+    }
+
+
+    private static long[] kthPalindrome(int[] queries, int intLength) {
+        int halfNumLen = (intLength + 1) / 2;
+        int halfNum = 1;
+        int queryLen = queries.length;
+        long[] ans = new long[queryLen];
+        Arrays.fill(ans, -1L);
+        for (int i = 1; i < halfNumLen; i++) {
+            halfNum *= 10;
+        }
+        for (int i = 0; i < queryLen; i++) {
+            long query = queries[i];
+            if (query > halfNum * 9L ) {
+                continue;
+            }
+            ans[i] = palindrome(halfNum + query - 1, intLength % 2 == 0);
+        }
+        return ans;
+    }
+
+    private static long palindrome(long i, boolean isDouble) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String s = String.valueOf(i);
+        stringBuilder.append(s);
+        if (isDouble) {
+            return Long.parseLong(s + stringBuilder.reverse());
+        } else {
+            return Long.parseLong(s + stringBuilder.reverse().substring(1));
+        }
+    }
+
+    /**
+     * cycle TLE
+     */
+    public static long[] kthPalindrome2(int[] queries, int intLength) {
+        long start = 1;
+        for (int i = 0; i < intLength; i++) {
+            start = start * 10;
+        }
+        long stop = start * 10 - 1;
+        int cnt = 0;
+        int existCnt = 0;
+        int queryLen = queries.length;
+        long[] ans = new long[queryLen];
+        Arrays.fill(ans, -1);
+        long current = start;
+        while (current <= stop) {
+            if (isPalindrome(current)) {
+                cnt++;
+                if (queries[existCnt] == cnt) {
+                    ans[existCnt] = current;
+                    existCnt++;
+                    if (existCnt == queryLen) {
+                        break;
+                    }
+                }
+            }
+            current += 1;
+        }
+        return ans;
+    }
+
+    public int findMin(int[] nums) {
+        int min = Integer.MAX_VALUE;
+        // 单调递增
+        if (nums[0] <= nums[nums.length - 1]) {
+            return nums[0];
+        }
+        for (int num : nums) {
+            if (num < min) {
+                min = num;
+            }
+        }
+        return min;
+    }
 
     public ListNode reverseBetween(ListNode head, int left, int right) {
         ListNode dummy = new ListNode();
