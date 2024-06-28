@@ -22,70 +22,38 @@ public class FileCopyTest {
             targetDir.mkdirs();
         }
 
-        moveLargeFiles(sourceDir, targetDir);
+        copyLargeFiles(sourceDir, targetDir);
     }
 
-    private static void moveLargeFiles(File sourceDir, File targetDir) {
+    private static void copyLargeFiles(File sourceDir, File targetDir) {
         File[] files = sourceDir.listFiles();
         if (files == null) return;
 
         for (File file : files) {
             if (file.isFile()) {
                 if (file.length() > SIZE_THRESHOLD) {
-                    moveFile(file, new File(targetDir, file.getName()));
+                    copyFile(file, new File(targetDir, file.getName()));
                 }
             } else if (file.isDirectory()) {
-                long dirSize = calculateDirectorySize(file);
-                if (dirSize > SIZE_THRESHOLD) {
-                    moveDirectory(file, new File(targetDir, file.getName()));
-                }
+                // 递归遍历子目录
+                copyLargeFiles(file, targetDir);
             }
         }
     }
 
-    private static void moveFile(File sourceFile, File targetFile) {
+    private static void copyFile(File sourceFile, File targetFile) {
         try {
             if (targetFile.exists()) {
                 System.out.println("Target file exists. Deleting source file: " + sourceFile.getAbsolutePath());
                 Files.delete(sourceFile.toPath());
             } else {
-                Files.move(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Moved file: " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
+                Files.copy(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Copied file: " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
+                Files.delete(sourceFile.toPath());
             }
         } catch (IOException e) {
-            System.err.println("Error moving file: " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
+            System.err.println("Error copying file: " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
             e.printStackTrace();
         }
     }
-
-    private static void moveDirectory(File sourceDir, File targetDir) {
-        if (!targetDir.exists()) {
-            targetDir.mkdirs();
-        }
-
-        File[] files = sourceDir.listFiles();
-        if (files == null) return;
-
-        for (File file : files) {
-            moveFile(file, new File(targetDir, file.getName()));
-        }
-
-        sourceDir.delete(); // Delete the source directory after moving all its contents
-    }
-
-    private static long calculateDirectorySize(File dir) {
-        long size = 0;
-        File[] files = dir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    size += file.length();
-                } else {
-                    size += calculateDirectorySize(file);
-                }
-            }
-        }
-        return size;
-    }
-
 }
